@@ -1,0 +1,25 @@
+name: Kanban Message
+
+on:
+  schedule:
+    - cron:  '40 12 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Send Message
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Send Kanban Message
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_COLOR: '#E94579'
+          SLACK_ICON: https://user-images.githubusercontent.com/54518925/177149492-8bd07341-9431-4be2-aa01-ce15b1061dd4.png
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_TITLE: '오늘 하루는 어땠나요?'
+          MSG_MINIMAL: true
+          SLACK_USERNAME: PIN-BOT
+          SLACK_MESSAGE: '오늘 여러분의 할 일을 적어주세요!!'
